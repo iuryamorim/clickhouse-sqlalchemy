@@ -2,9 +2,9 @@ from sqlalchemy import Table as TableBase, inspection
 from sqlalchemy.sql.base import (
     _bind_or_error,
 )
+from sqlalchemy.sql.selectable import Join
 
 from clickhouse_sqlalchemy.sql.selectable import (
-    Join,
     Select,
 )
 from . import ddl
@@ -19,10 +19,14 @@ class Table(TableBase):
 
     def join(self, right, onclause=None, isouter=False, full=False,
              type=None, strictness=None, distribution=None):
-        return Join(self, right,
-                    onclause=onclause, type=type,
-                    isouter=isouter, full=full,
-                    strictness=strictness, distribution=distribution)
+        flags = {
+            'full': full,
+            'type': type,
+            'strictness': strictness,
+            'distribution': distribution
+        }
+        return Join(self, right, onclause=onclause, isouter=isouter,
+                    full=flags)
 
     def select(self, whereclause=None, **params):
         return Select._create([self], whereclause, **params)
