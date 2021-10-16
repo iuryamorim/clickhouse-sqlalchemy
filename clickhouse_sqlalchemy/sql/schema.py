@@ -1,12 +1,9 @@
 from sqlalchemy import Table as TableBase
-from sqlalchemy.sql.base import (
-    _bind_or_error,
-)
+from sqlalchemy.sql.base import _bind_or_error
 from sqlalchemy.sql.selectable import Join
 
-from clickhouse_sqlalchemy.sql.selectable import (
-    Select,
-)
+from clickhouse_sqlalchemy.sql.selectable import Select
+
 from . import ddl
 
 
