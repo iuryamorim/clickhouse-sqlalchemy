@@ -887,9 +887,11 @@ class ClickHouseDialect(default.DefaultDialect):
             'DESCRIBE TABLE {}'.format(qualified_name))
         rows = self._execute(connection, query)
 
-        return [self._get_column_info(row.name, row.type, row.default_type,
-                                      row.default_expression)
-                for row in rows]
+        return [
+            self._get_column_info(
+                r.name, r.type, r.default_type, r.default_expression
+            ) for r in rows
+        ]
 
     def _get_column_info(self, name, format_type, default_type,
                          default_expression):
@@ -899,7 +901,7 @@ class ClickHouseDialect(default.DefaultDialect):
         result = {
             'name': name,
             'type': col_type,
-            'nullable': True,
+            'nullable': format_type.startswith('Nullable('),
             'default': col_default,
         }
         return result
