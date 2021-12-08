@@ -160,11 +160,11 @@ class ClickHouseSQLCompiler(compiler.SQLCompiler):
         return text
 
     def visit_array_join(self, array_join, **kwargs):
+        kwargs['within_columns_clause'] = True
         return ' \nARRAY JOIN {columns}'.format(
             columns=', '.join(
                 col._compiler_dispatch(self,
                                        within_label_clause=False,
-                                       within_columns_clause=True,
                                        **kwargs)
                 for col in array_join.clauses
 
