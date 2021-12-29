@@ -89,7 +89,7 @@ setup(
     install_requires=[
         'sqlalchemy>=1.3,<1.4',
         'requests',
-        'clickhouse-driver>=0.1.2',
+        'clickhouse-driver==0.1.2',
         'ipaddress; python_version<"3.4"',
     ],
     # Registering `clickhouse` as dialect.
